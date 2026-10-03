@@ -3,8 +3,8 @@
   "short_name": "15PTS",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#f6f4ef",
-  "theme_color": "#111827",
+  "background_color": "#F7F5F0",
+  "theme_color": "#17233B",
   "description": "AKC conformation points calculator and show record tracker.",
   "icons": [
     {
