@@ -40,3 +40,18 @@ input,select,.modalCard textarea{border-color:#d4d8df;color:var(--ink)}
 .rosetteIcon.g1{background:#315C9B;border-color:#315C9B}.rosetteIcon.g2{background:#c62828;border-color:#c62828}.rosetteIcon.g3{background:#e0b51f;border-color:#e0b51f}.rosetteIcon.g4{background:#f8f8f4;border-color:#e8e6df;box-shadow:inset 0 0 0 2px #C99A3D}.rosetteIcon.bis{width:44px;height:44px;background:conic-gradient(#c62828 0 33%,#fff 33% 66%,#315C9B 66%);border:7px solid transparent;box-shadow:inset 0 0 0 3px #C99A3D}.rosetteIcon.rbis{width:42px;height:42px;background:#efe7d2;border-color:#C99A3D}.rosetteIcon.ohg1{background:#f02a9d;border-color:#f02a9d}.rosetteIcon.ohg2{background:#61c52d;border-color:#61c52d}.rosetteIcon.ohg3{background:#1599a6;border-color:#1599a6}.rosetteIcon.ohg4{background:#f3e7c6;border-color:#eadab1}.rosetteIcon.ohrbis{background:#82d66b;border-color:#82d66b}.rosetteIcon.ohbis{background:#26bfc5;border-color:#26bfc5}
 .releaseStamp{position:fixed;right:8px;bottom:8px;z-index:4;background:#17233B;color:#f0c96b;border:1px solid #C99A3D;border-radius:999px;padding:4px 7px;font-size:8px;font-weight:800;letter-spacing:.5px;opacity:.78;pointer-events:none}
 @media(max-width:560px){.result{grid-template-columns:64px 48px 1fr;gap:9px}.resultAward .awardVisual{transform:scale(.88)}.brand{font-size:28px}}
+\n/* v4.2.3 — refined Option 6 Ribbon Sweep. Header-only branding patch. */
+header .brand{display:flex;align-items:center;gap:6px;color:#F2CC72;font-family:Georgia,"Times New Roman",serif;text-shadow:0 1px 0 #6f4d13;font-size:31px;font-weight:800}
+header .ribbonMark{position:relative;display:inline-flex;align-items:center;justify-content:center;width:48px;height:40px;overflow:visible}
+header .brand15{position:relative;z-index:3;font-size:38px;font-weight:800;line-height:.92;letter-spacing:-3px;color:#F2CC72}
+header .ribbonMark i{position:absolute;z-index:4;left:0;top:22px;width:49px;height:8px;border-radius:50% 18% 50% 18%;background:linear-gradient(180deg,#8f5ab0 0%,#633A82 46%,#4a2868 100%);border-top:1px solid #e0bd61;border-bottom:1px solid #a87622;transform:rotate(-10deg) skewX(-18deg);box-shadow:0 1px 1px #0004}
+header .ribbonMark i::after{content:"";position:absolute;right:-2px;top:-2px;width:17px;height:9px;border-radius:50%;border-top:2px solid #d4aa43;transform:rotate(13deg)}
+header .brandPTS{font-size:30px;letter-spacing:-1.2px}
+.hero15{display:none!important}
+@media(max-width:560px){header .brand{font-size:28px}header .brandPTS{font-size:27px}header .ribbonMark{width:44px;height:37px}header .brand15{font-size:35px}header .ribbonMark i{width:45px;top:21px}}
+
+/* v4.2.4 — approved Option 6 rendered brandmark asset; layout unchanged. */
+header .brand{display:flex;align-items:center;min-width:0;text-shadow:none!important;font-size:0!important;line-height:1!important}
+header .brandLogo{display:block;width:178px;max-width:48vw;height:auto;object-fit:contain}
+header .brand .ribbonMark,header .brand .brandPTS,header .brand sup{display:none!important}
+@media(max-width:560px){header .brandLogo{width:158px;max-width:52vw}}
