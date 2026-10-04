@@ -87,3 +87,11 @@ input[type="date"]::-webkit-datetime-edit {
 input[type="date"]::-webkit-calendar-picker-indicator {
   margin: 0;
 }
+
+/* v4.2.9 — header tagline, source link, and blank-zero input UX */
+header{align-items:center}
+header .tag{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left;font-size:10px;line-height:1.45;letter-spacing:.7px;font-weight:700;color:#e8e3d8;white-space:nowrap}
+header .tag span{display:block}
+.result #scheduleStatus a.scheduleLink{color:#cbd5e1;text-decoration:underline;text-decoration-color:#C99A3D;text-underline-offset:2px}
+input::placeholder{color:#9ca3af;opacity:1}
+@media(max-width:560px){header .tag{font-size:9px;line-height:1.4;letter-spacing:.5px}}
