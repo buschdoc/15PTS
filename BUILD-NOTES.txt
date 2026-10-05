@@ -1,0 +1,29 @@
+15PTS v4.3.0 TEST
+Build date: 2026-10-04
+
+PROVENANCE
+Built directly from the user-provided deployment package uploaded as:
+15PTS-PWA-v4.2.9(1).zip
+
+That source was preserved byte-for-byte as:
+15PTS-v4.2.9-DEPLOYED-BASELINE.zip
+
+v4.2.9 is the immediate deployed development baseline. v4.2.8 remains the protected calculation/BIS-correction baseline in the release history.
+
+TEST BUILD SCOPE
+- Moves Armband and Handler into Event data.
+- Adds Class / Competition Entered with regular, eligible non-regular, and direct BOB routes.
+- Adds contextual help for Class / Competition Entered.
+- Adds contextual help for Non-Regular Dogs Advancing to BOB.
+- Filters award choices for non-Champion non-regular/direct-BOB entry routes.
+- Prevents a non-Champion non-regular entry from earning CH/GCH points from that entry.
+- Adds saved entry-route metadata to event records.
+- Adds chronology-derived progression helpers and milestone storage.
+- Adds recurring New Champion modal when a recalculation identifies the qualifying event.
+- Preserves legacy records and existing 4.2.9 calculation data.
+- GCH title completion is conservative: Champion-defeat evidence must be explicitly stored; points/majors alone do not declare GCH.
+
+REGRESSION GUARDRAILS
+- points-data.js is unchanged from the uploaded v4.2.9 deployment baseline.
+- 4.2.9 WD/WB -> BOW -> BOB -> Group -> BIS calculation engine retained except where entry-route eligibility explicitly changes behavior.
+- Service-worker cache/version bumped to v4.3.0 Test.

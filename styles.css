@@ -95,3 +95,6 @@ header .tag span{display:block}
 .result #scheduleStatus a.scheduleLink{color:#cbd5e1;text-decoration:underline;text-decoration-color:#C99A3D;text-underline-offset:2px}
 input::placeholder{color:#9ca3af;opacity:1}
 @media(max-width:560px){header .tag{font-size:9px;line-height:1.4;letter-spacing:.5px}}
+
+/* v4.3.0 Test — event route, contextual help, progression/milestones */
+.infoBtn{display:inline;border:0;background:none;color:var(--red);font-weight:900;padding:0 2px;cursor:pointer}.milestone{margin-top:8px;padding:8px 10px;border-radius:10px;background:#fff6db;border:1px solid #e8cf87;font-size:12px;font-weight:800}.conflict{margin-top:8px;padding:8px 10px;border-radius:10px;background:#fff1f2;border:1px solid #fecdd3;color:#9f1239;font-size:12px}.rosette{font-size:54px;text-align:center}.modalCard .ruleLinks{font-size:12px;line-height:1.6}.trackAuto{font-size:10px;color:var(--muted);font-weight:600}
