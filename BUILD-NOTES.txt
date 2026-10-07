@@ -1,11 +1,8 @@
-15PTS v4.3.0 TEST-R3
-Built 2026-10-06.
+15PTS v4.3.0 TEST-R5
+Source: user-uploaded v4.3.0 TEST-R4 package.
 
-Correction scope from TEST-R2:
-- Entered in NOHS is a standard select field: initial unset state, choices Yes then No.
-- Direct Best of Breed Competition entry is unavailable to Non-Champion/Class-status dogs.
-- Non-Champion dogs entered through eligible non-regular classes remain ineligible for CH/GCH points through BOB, Group and BIS advancement.
-- Non-regular competition inputs explicitly mean OTHER non-regular dogs/bitches advancing to BOB; tracked dog is excluded from manual counts.
-- Help text explains tracked-dog exclusion and that Champion status of other non-regular entrants is not required for these competition-count inputs.
-
-Protected: verified 2026 points-data.js remains unchanged from v4.2.9 baseline.
+R5 is a minimal help-text correction only:
+- Non-Regular Dogs/Bitches Advancing to BOB use TOTAL counts.
+- Include the tracked dog in that total when the tracked dog entered through an eligible non-regular class and advanced to BOB/Variety.
+- Removed stale instructions referring to OTHER entrants or excluding the tracked dog.
+- Calculation engine and points-data.js are unchanged from R4.
