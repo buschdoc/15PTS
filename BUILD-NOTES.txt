@@ -1,12 +1,11 @@
-15PTS v4.3.0 TEST-R2
-Corrected test build based directly on the protected user-provided v4.2.9 deployed baseline.
-Baseline archive: 15PTS-v4.2.9-DEPLOYED-BASELINE.zip
+15PTS v4.3.0 TEST-R3
+Built 2026-10-06.
 
-Reconciled corrections include:
-- Event field order: Event, Date, State, Division, Class/Competition, Armband, Handler, NOHS, Superintendent, Judge.
-- NOHS moved out of Dog details and stored per event with handler context.
-- Class/Competition Entered selector and adjacent contextual information control.
-- Non-Regular Dogs/Bitches Advancing to BOB fields restored and dedicated information popup added.
-- Context-sensitive award choices for regular, eligible non-regular, and direct BOB entry routes.
-- Progression/title milestone logic from the v4.3.0 development branch retained with fail-safe GCH title qualification.
-- 2026 points-data.js carried unchanged from v4.2.9 baseline.
+Correction scope from TEST-R2:
+- Entered in NOHS is a standard select field: initial unset state, choices Yes then No.
+- Direct Best of Breed Competition entry is unavailable to Non-Champion/Class-status dogs.
+- Non-Champion dogs entered through eligible non-regular classes remain ineligible for CH/GCH points through BOB, Group and BIS advancement.
+- Non-regular competition inputs explicitly mean OTHER non-regular dogs/bitches advancing to BOB; tracked dog is excluded from manual counts.
+- Help text explains tracked-dog exclusion and that Champion status of other non-regular entrants is not required for these competition-count inputs.
+
+Protected: verified 2026 points-data.js remains unchanged from v4.2.9 baseline.
