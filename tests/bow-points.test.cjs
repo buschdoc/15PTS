@@ -30,7 +30,7 @@ const scenarios = [
   ['dog lower than bitch', 'dog', 2, 9, 1, 3, 3],
   ['dog higher than bitch', 'dog', 11, 3, 4, 1, 4],
   ['dog tied with bitch', 'dog', 8, 9, 3, 3, 3],
-  ['bitch lower than dog', 'bitch', 11, 14, 4, 3, 4],
+  ['bitch lower than dog', 'bitch', 14, 11, 5, 3, 5],
   ['bitch higher than dog', 'bitch', 3, 12, 1, 4, 4],
   ['bitch tied with dog', 'bitch', 5, 6, 2, 2, 2],
   ['both reach five', 'dog', 14, 15, 5, 5, 5],
