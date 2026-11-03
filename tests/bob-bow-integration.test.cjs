@@ -1,65 +1,65 @@
-'use strict';
-const { test } = require('node:test');
-const assert = require('node:assert/strict');
-const fs = require('node:fs');
-const path = require('node:path');
-const vm = require('node:vm');
+ 'use strict';
+const {test}=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const vm=require('node:vm');
 
-// Executes the actual production toggleAward() function, not a rewritten model.
-const app = fs.readFileSync(path.resolve(__dirname, '..', 'app.js'), 'utf8');
-const start = app.indexOf('function toggleAward(a){');
-const end = app.indexOf('\nconst NOHS_PTS=', start);
-assert.ok(start >= 0 && end > start, 'Could not isolate production toggleAward()');
-const source = app.slice(start, end);
-
-function harness({sex='dog', status='class', classDogs=3, classBitches=3}={}) {
-  const fields = {sex:{value:sex},status:{value:status},classDogs:{value:String(classDogs)},classBitches:{value:String(classBitches)}};
-  const context = {
-    selectedAwards:new Set(), selectedNOHS:new Set(),
-    $: id => fields[id.slice(1)] || null,
-    isGCH: () => ['champion','grandchampion'].includes(fields.status.value),
-    renderAwards: () => {},
+// Execute the actual v4.3.0-R6 confirmation and toggleAward functions.
+const app=fs.readFileSync(path.resolve(__dirname,'..','app.js'),'utf8');
+function extract(startText,endText){
+  const start=app.indexOf(startText),end=app.indexOf(endText,start);
+  assert.ok(start>=0&&end>start,`Missing production function: ${startText}`);
+  return app.slice(start,end);
+}
+const source=extract('function confirmOppositeWinners(){','\nfunction updateEntryRouteEligibility()')+'\n'+extract('function toggleAward(a){','\nconst NOHS_PTS=');
+function harness({sex='dog',status='class',oppositeAwarded=true}={}){
+  const fields={sex:{value:sex},status:{value:status}};
+  const confirmations=[];
+  const context={
+    selectedAwards:new Set(),selectedNOHS:new Set(),oppositeWinnersAwarded:null,
+    $:id=>fields[id.slice(1)]||null,
+    isGCH:()=>['champion','grandchampion'].includes(fields.status.value),
+    renderAwards:()=>{},
+    window:{confirm:message=>{confirmations.push(message);return oppositeAwarded}}
   };
-  vm.createContext(context);
-  vm.runInContext(source,context,{timeout:1000});
-  return {choose: award => context.toggleAward(award), awards:context.selectedAwards, fields, context};
+  vm.createContext(context);vm.runInContext(source,context,{timeout:1000});
+  return {choose:a=>context.toggleAward(a),awards:context.selectedAwards,confirmations,context};
 }
-
-for (const sex of ['dog','bitch']) {
-  test(`Class ${sex}: BOB assigns Winners and BOW when both Winners exist`, () => {
-    const h=harness({sex,classDogs:3,classBitches:3});
-    h.choose('BOB');
-    assert.ok(h.awards.has(sex==='dog'?'WD':'WB'));
-    assert.ok(h.awards.has('BOB'));
-    assert.ok(h.awards.has('BOW'));
+for(const sex of ['dog','bitch']){
+  const winner=sex==='dog'?'WD':'WB';
+  for(const answer of [true,false]){
+    for(const award of ['BOB','G1','BIS','RBIS']){
+      test(`Class ${sex}: ${award} with opposite-sex Winners ${answer?'awarded':'not awarded'}`,()=>{
+        const h=harness({sex,oppositeAwarded:answer});h.choose(award);
+        assert.ok(h.awards.has(winner));assert.ok(h.awards.has('BOB'));
+        assert.equal(h.awards.has('BOW'),answer);
+        assert.equal(h.confirmations.length,1);
+        assert.match(h.confirmations[0],sex==='dog'?/Winners Bitch/:/Winners Dog/);
+        if(award!=='BOB')assert.ok(h.awards.has(award));
+      });
+    }
+  }
+  test(`Class ${sex}: cached answer avoids repeat prompt`,()=>{
+    const h=harness({sex,oppositeAwarded:false});h.choose('BOB');h.choose('G1');
+    assert.equal(h.confirmations.length,1);assert.ok(!h.awards.has('BOW'));
   });
-  test(`Class ${sex}: BOB must not assign BOW when opposite-sex Winners is absent`, () => {
-    const h=harness({sex,classDogs:sex==='dog'?3:0,classBitches:sex==='bitch'?3:0});
-    h.choose('BOB');
-    assert.ok(h.awards.has('BOB'));
-    assert.ok(!h.awards.has('BOW'), 'BUG: production toggleAward automatically adds BOW despite no opposite-sex class entries');
-  });
-  test(`Class ${sex}: Group placement must not imply BOW with no opposite-sex Winners`, () => {
-    const h=harness({sex,classDogs:sex==='dog'?3:0,classBitches:sex==='bitch'?3:0});
-    h.choose('G1');
-    assert.ok(h.awards.has('BOB'));
-    assert.ok(!h.awards.has('BOW'), 'BUG: Group path automatically adds BOW despite no opposite-sex class entries');
+  test(`Class ${sex}: removing BOB removes dependent Group award`,()=>{
+    const h=harness({sex});h.choose('G1');h.choose('BOB');
+    assert.ok(!h.awards.has('BOB'));assert.ok(!h.awards.has('G1'));
   });
 }
-
-test('Champion BOB must not assign BOW',()=>{
-  const h=harness({status:'champion'});
-  h.choose('BOB');
-  assert.ok(h.awards.has('BOB'));
-  assert.ok(!h.awards.has('BOW'));
-  assert.ok(!h.awards.has('WD'));
-  assert.ok(!h.awards.has('WB'));
+test('Champion BOB never prompts or assigns BOW',()=>{
+  const h=harness({status:'champion'});h.choose('BOB');
+  assert.ok(h.awards.has('BOB'));assert.ok(!h.awards.has('BOW'));
+  assert.equal(h.confirmations.length,0);
 });
-
-test('Removing class BOB removes dependent Group awards',()=>{
-  const h=harness();
-  h.choose('G1');
-  h.choose('BOB');
-  assert.ok(!h.awards.has('BOB'));
-  assert.ok(!h.awards.has('G1'));
+test('Saved record includes explicit opposite-sex Winners answer',()=>{
+  assert.match(app,/awards:\[\.\.\.selectedAwards\],oppositeWinnersAwarded/);
+});
+test('Editing record restores explicit answer or legacy BOW inference',()=>{
+  assert.match(app,/oppositeWinnersAwarded=r\.oppositeWinnersAwarded\?\?\(selectedAwards\.has\('BOW'\)\?true:null\)/);
+});
+test('Clearing form resets confirmation state',()=>{
+  assert.match(app,/function clearForm\(\)[^\n]*oppositeWinnersAwarded=null/);
 });
